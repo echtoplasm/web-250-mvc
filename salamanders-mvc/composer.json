@@ -1,0 +1,19 @@
+{
+    "name": "web250/mvc",
+    "description": "Introduction to mvc using composer",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Web250\\Mvc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Zach",
+            "email": "zacharyamassey@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
