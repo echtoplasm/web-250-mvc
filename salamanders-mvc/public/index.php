@@ -1,9 +1,4 @@
 <?php
-/**
- * ------------------------------------------------------------
- * Web250 MVC - Public Front Controller (with Router)
- * ------------------------------------------------------------
- */
 // public/index.php
 //
 // This is the FRONT CONTROLLER.
@@ -11,28 +6,46 @@
 // It will:
 // 1. Turn on error reporting (for development).
 // 2. Load the Router and the Controller class.
-// 3. Register routes (which URL " which action).
+// 3. Register routes (which URL → which action).
 // 4. Ask the router to dispatch the current request.
 declare(strict_types=1);
-// Show errors while we are learning (in production, this should be turned off)
+
+use Dotenv\Dotenv;
+
+
+use Web250\Mvc\Router;
+use Web250\Mvc\Controllers\HomeController;
+// Show errors while we are learning (in production, this should be turned
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
-// Load the Router and the SalamanderController class
-require_once __DIR__ . '/../src/Router.php';
+// Load the SalamanderController class (not namespaced yet)
 require_once __DIR__ . '/../src/Controllers/SalamanderController.php';
+require __DIR__ . '/../vendor/autoload.php';
+// --- NEW: load .env variables ---
+$dotenv = Dotenv::createImmutable(dirname(__DIR__)); // project root
+$dotenv->load();
+// Now DB_HOST, DB_NAME, etc. are available in $_ENV / $_SERVER
 // Create a Router instance
 $router = new Router();
 // Register a route for the home page ("/")
 $router->get('/', function () {
- // This callback is called when the browser requests "/"
- $controller = new SalamanderController();
- $controller->index();
+  // This callback is called when the browser requests "/"
+  $controller = new HomeController();
+  echo $controller->index();
 });
 // Register a route for "/salamanders"
 $router->get('/salamanders', function () {
- // This callback is called when the browser requests "/salamanders"
- $controller = new SalamanderController();
- $controller->index();
+  $controller = new SalamanderController();
+  $controller->index();
+});
+// HomeController routes
+$router->get('/home', function () {
+  $controller = new HomeController();
+  echo $controller->index();
+});
+$router->get('/about', function () {
+  $controller = new HomeController();
+  echo $controller->about();
 });
 // Figure out which path the user requested, ignoring the query string
 // Example: "/salamanders?page=2" becomes "/salamanders"
