@@ -19,7 +19,11 @@
 <body>
   <h1>Salamanders</h1>
   <?php foreach ($salamanders as $s): ?>
-    <h2><?= htmlspecialchars($s['name']) ?></h2>
+    <h2>
+      <a href="/salamanders/show?id=<?= htmlspecialchars($s['id']) ?>">
+        <?= htmlspecialchars($s['name']) ?>
+      </a>
+    </h2>
     <p>
       <strong>Habitat:</strong>
       <?= nl2br(htmlspecialchars($s['habitat'])) ?>
